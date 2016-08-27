@@ -70,7 +70,7 @@
                 },
 
                 ready: function() {
-                    // that = this;
+                    thisBcW = this;
                     this.setupEventListener();
                     document.addEventListener("deviceready", this.setupMedia, false);
                 },
@@ -84,40 +84,52 @@
                 },
 
                 setupMedia: function() {
-                    mediaIntro_1 = new Media('/android_asset/www/src/media/intro1.mp3', function() {mediaIntro_2.play()});
-                    // mediaIntro_2 = new Media('/android_asset/www/src/media/intro2.mp3', function() {that.triggerMumble = false});
-                    mediaIntro_2 = new Media('/android_asset/www/src/media/intro2.mp3');
-                    mediaForward = new Media('/android_asset/www/src/media/forward.mp3');
-                    mediaLeft = new Media('/android_asset/www/src/media/left.mp3');
-                    mediaStop = new Media('/android_asset/www/src/media/stop.mp3');
-                    mediaRight = new Media('/android_asset/www/src/media/right.mp3');
-                    mediaBackward = new Media('/android_asset/www/src/media/backward.mp3');
+                    mediaIntro_1 = new Media('/android_asset/www/src/media/intro1.mp3', function() {mediaIntro_2.play();});
+                    mediaIntro_2 = new Media('/android_asset/www/src/media/intro2.mp3', thisBcW.stopMumble);
+                    mediaForward = new Media('/android_asset/www/src/media/forward.mp3', thisBcW.stopMumble);
+                    mediaLeft = new Media('/android_asset/www/src/media/left.mp3', thisBcW.stopMumble);
+                    mediaStop = new Media('/android_asset/www/src/media/stop.mp3', thisBcW.stopMumble);
+                    mediaRight = new Media('/android_asset/www/src/media/right.mp3', thisBcW.stopMumble);
+                    mediaBackward = new Media('/android_asset/www/src/media/backward.mp3', thisBcW.stopMumble);
 
                     mediaIntro_1.play();
-                    // that.triggerMumble = true;
+                    thisBcW.startMumble();
+                },
+
+                startMumble: function() {
+                    thisBcW.triggerMumble = true;
+                },
+
+                stopMumble: function() {
+                    thisBcW.triggerMumble = false;
                 },
 
                 sendForward: function() {
+                    thisBcW.startMumble();
                     mediaForward.play();
                     bluetoothSerial.write("<FW,2>", this.onWrite, this.onError);
                 },
 
                 sendLeft: function() {
+                    thisBcW.startMumble();
                     mediaLeft.play();
                     bluetoothSerial.write("<LT,2>", this.onWrite, this.onError);
                 },
 
                 sendStop: function() {
+                    thisBcW.startMumble();
                     mediaStop.play();
                     bluetoothSerial.write("<ST>", this.onWrite, this.onError);
                 },
 
                 sendRight: function() {
+                    thisBcW.startMumble();
                     mediaRight.play();
                     bluetoothSerial.write("<RT,2>", this.onWrite, this.onError);
                 },
 
                 sendBackward: function() {
+                    thisBcW.startMumble();
                     mediaBackward.play();
                     bluetoothSerial.write("<BW,2>", this.onWrite, this.onError);
                 },

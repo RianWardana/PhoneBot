@@ -44,7 +44,7 @@
         >
             <iron-pages attr-for-selected="halaman" selected="{{halamanSekarang}}">
                 <botcontrol-connection halaman="Setup Connection"></botcontrol-connection>
-                <botcontrol-walk halaman="Walking Control"></botcontrol-walk>
+                <botcontrol-walk halaman="Walking Control" trigger-mumble="{{triggerMumble}}"></botcontrol-walk>
                 <botcontrol-animation halaman="Animations"></botcontrol-animation>
             </iron-pages>
 
@@ -72,6 +72,11 @@
                     },
 
                     dialogOpened: {
+                        type: Boolean,
+                        notify: true
+                    },
+
+                    triggerMumble: {
                         type: Boolean,
                         notify: true
                     }

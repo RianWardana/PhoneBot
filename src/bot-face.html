@@ -62,7 +62,6 @@
 
                     triggerMumble: {
                         type: Boolean,
-                        value: false,
                         observer: '_doMumble'
                     }
                 },
@@ -72,12 +71,11 @@
                 },
 
                 _doMumble: function() {
-                    if (this.triggerMumble) var doMumble = setInterval(this.mumble, 300);
+                    if (this.triggerMumble) doMumble = setInterval(this.mumble, 300);
                     else if (!this.triggerMumble) clearInterval(doMumble);
                 },
 
                 ready: function() {
-                    // that = this;
                     this.setupPosition();
                     setInterval(this.blink, 3000);  
                 },
