@@ -1,0 +1,63 @@
+<dom-module id="botcontrol-camera">
+    <template>
+        <style include="iron-flex iron-flex-alignment">
+            :host {
+                display: block;
+            }
+        </style>
+                
+    </template>
+
+
+
+    
+    <script>
+        (function() {
+            Polymer({
+                is: 'botcontrol-camera',
+                properties: {
+                    halamanSekarang: {
+                        type: String,
+                        observer: '_cekHalaman'
+                    },
+
+                    deviceReady: {
+                        type: Boolean,
+                        value: false
+                    }
+                },
+
+                _cekHalaman: function(halaman) {
+                    if (this.deviceReady) {
+                        console.log("oy")
+                        if (this.halamanSekarang == 'Take Photo') {
+                            // cordova.plugins.camerapreview.show();
+                            console.log("heuy")
+                            var xVal = (window.innerWidth - 300) / 2;
+                            var yVal = window.innerHeight - 350;
+                            cordova.plugins.camerapreview.startCamera({x: xVal, y: yVal, width: 300, height: 260}, "front");
+                        }
+                        else {
+                            // cordova.plugins.camerapreview.hide();
+                            cordova.plugins.camerapreview.stopCamera();
+                        }
+                    }
+                    else console.log("jebol")
+                },
+
+                ready: function() {
+                    thisBcCa = this;
+                    document.addEventListener("deviceready", function() {
+                        // var xVal = (window.innerWidth - 300) / 2;
+                        // var yVal = window.innerHeight - 350;
+                        // cordova.plugins.camerapreview.startCamera({x: xVal, y: yVal, width: 300, height: 260}, "front");
+                        // cordova.plugins.camerapreview.hide();
+                        thisBcCa.deviceReady = true;
+                    }, false);
+                }
+
+
+            });
+        })();
+    </script>
+</dom-module>
