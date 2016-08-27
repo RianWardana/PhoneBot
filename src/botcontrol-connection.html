@@ -1,0 +1,167 @@
+<dom-module id="botcontrol-connection">
+    <template>
+        <style include="iron-flex iron-flex-alignment">
+            :host {
+                display: block;
+                --iron-icon-height: 24px;
+                --iron-icon-width: 24px;
+                --paper-spinner-layer-1-color: #90A4AE;
+                --paper-spinner-layer-2-color: #90A4AE;
+                --paper-spinner-layer-3-color: #90A4AE;
+                --paper-spinner-layer-4-color: #90A4AE;
+                --paper-spinner-stroke-width: 4px;
+                --paper-fab-background: #90A4AE;
+                --paper-fab-keyboard-focus-background: #90A4AE;
+            }
+
+            iron-icon {
+                margin-right: 15px;
+            }
+
+            paper-spinner {
+                position: absolute;
+                top: 105px;
+                height: 50px;
+                width: 50px;
+            }
+            
+            #device-name {
+                position: absolute;
+                top: 80px;
+            }
+
+            paper-fab {
+                --iron-icon-height: 48px;
+                --iron-icon-width: 48px;
+                position: absolute;
+                top: 105px;
+                height: 100px;
+                width: 100px;
+            }
+
+        </style>
+                
+
+        <iron-pages attr-for-selected="view" selected="{{viewSekarang}}">
+            <div view="list">
+                <template is="dom-repeat" items="{{pairedDevices}}">
+                    <paper-item on-tap="onSelect">
+                        <iron-icon icon="device:bluetooth"></iron-icon>
+                        {{item.name}}
+                    </paper-item on-tap="onSelect">
+                </template>
+            </div>
+
+            <div view="spinner">
+                <div class="horizontal center-justified layout">
+                    <paper-spinner active></paper-spinner>
+                </div>
+            </div>
+
+            <div view="status">
+                <div class="horizontal center-justified layout">
+                    <div id="device-name">{{deviceName}}</div>
+                    <paper-fab icon="device:bluetooth-disabled" on-tap="clickDisconnect"></paper-fab>
+                </div>
+            </div>
+        </iron-pages>
+        
+
+        <paper-toast id="toastConnectionFail" text="Fail to connect."></paper-toast>
+    </template>
+
+
+
+    
+    <script>
+        (function() {
+            Polymer({
+                is: 'botcontrol-connection',
+                properties: {
+                    viewSekarang: {
+                        type: String,
+                        value: 'spinner'
+                    },
+
+                    deviceConnected: {
+                        type: Boolean,
+                        value: false
+                    },
+
+                    deviceName: {
+                        type: String,
+                        value: ''
+                    },
+
+                    pairedDevices: {
+                        type: Array,
+                        value: []
+                    }
+                },
+
+                ready: function() {
+                    thisBcC = this;
+                    // thisBcC = this;
+                    console.log("ready")
+                    document.addEventListener("deviceready", this.deviceReady, false);
+                },
+
+                deviceReady: function() {
+                    console.log("deviceready");
+
+                    bluetoothSerial.enable(thisBcC.listPaired, function() {
+                        console.log("enabling fail");
+                    });
+                },
+
+                listPaired: function() {
+                    console.log("listpaired");
+
+                    bluetoothSerial.list(function(devices) {
+                        devices.forEach(function(device) {
+                            thisBcC.push('pairedDevices', {
+                                address: device.address,
+                                name: device.name
+                            })
+                            console.log("listpaired");
+                        });
+                        thisBcC.viewSekarang = 'list';
+                    }, function() {
+                        console.log("Fail listing paired devices.")
+                    });
+                },
+
+                onSelect: function(e) {
+                    this.viewSekarang = 'spinner';
+                    this.deviceName = e.model.item.name;
+                    bluetoothSerial.connect(e.model.item.address, this.onConnectSuccessful, this.onConnectFail);
+                },
+
+                onConnectSuccessful: function() {
+                    thisBcC.viewSekarang = 'status';
+                    thisBcC.deviceConnected = true;
+                },
+
+                onConnectFail: function() {
+                    thisBcC.viewSekarang = 'list';
+                    thisBcC.deviceConnected = false;
+                    this.deviceName = '';
+                    thisBcC.$.toastConnectionFail.open();
+                },
+
+                clickDisconnect: function() {
+                    this.viewSekarang = 'spinner';
+                    bluetoothSerial.disconnect(this.onDisconnectSuccessful, this.onDisconnectFail);
+                },
+
+                onDisconnectSuccessful: function() {
+                    thisBcC.viewSekarang = 'list';
+                    thisBcC.deviceConnected = false;
+                }
+
+                
+
+            });
+        })();
+    </script>
+</dom-module>

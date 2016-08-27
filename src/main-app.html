@@ -1,0 +1,52 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/av-icons.html">
+<link rel="import" href="../bower_components/iron-icons/device-icons.html">
+<link rel="import" href="../bower_components/iron-icons/hardware-icons.html">
+<link rel="import" href="../bower_components/iron-icons/communication-icons.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
+
+<link rel="import" href="../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../bower_components/neon-animation/animations/fade-out-animation.html">
+
+<link rel="import" href="bot-face.html">
+
+<link rel="import" href="bot-control.html">
+<link rel="import" href="botcontrol-connection.html">
+<link rel="import" href="botcontrol-walk.html">
+<link rel="import" href="botcontrol-animation.html">
+
+<dom-module id="main-app">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+
+        </style>
+        
+        <bot-face dialog-opened="{{dialogOpened}}" trigger-mumble="{{triggerMumble}}"></bot-face>
+        <bot-control dialog-opened="{{dialogOpened}}" trigger-mumble="{{triggerMumble}}"></bot-control>
+
+    </template>
+
+    <script>
+        Polymer({
+            is: 'main-app',
+            properties: {
+            },
+
+        });
+    </script>
+</dom-module>

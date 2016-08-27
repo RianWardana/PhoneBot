@@ -1,0 +1,145 @@
+<dom-module id="botcontrol-animation">
+    <template>
+        <style include="iron-flex iron-flex-alignment">
+            :host {
+                display: block;
+                --iron-icon-height: 48px;
+                --iron-icon-width: 48px;
+            }
+
+            :root {
+                
+            }
+
+            paper-button {
+                text-align: center;
+                background-color: #90A4AE;
+                color: #FFF;
+                margin: 0 5px 0;
+                width: 50%;
+            }
+            
+            paper-button#buttonStop {
+                margin: 0 20px 0;
+            }
+
+            .horizontal.layout {
+                margin-bottom: 20px;
+            }
+        </style>
+
+
+        
+        <div class="horizontal center-justified layout" style="margin-bottom: 10px;">
+            <paper-button raised id="buttonShake" on-tap="sendShake">Shake</paper-button>
+            <paper-button raised id="buttonBounce" on-tap="sendBounce">Bounce</paper-button>
+        </div>
+        
+        <div class="horizontal center-justified layout" style="margin-bottom: 10px;">
+            <paper-button raised id="buttonWobbleLeft" on-tap="sendWobbleLeft">Wobble Left</paper-button>
+            <paper-button raised id="buttonWobble" on-tap="sendWobble">Wobble</paper-button>
+            <paper-button raised id="buttonWobbleRight" on-tap="sendWobbleRight">Wobble Right</paper-button>
+        </div>
+        
+        <div class="horizontal center-justified layout" style="margin-bottom: 10px;">
+            <paper-button raised id="buttonTapLeft" on-tap="sendTapLeft">Tap Left Foot</paper-button>
+            <paper-button raised id="buttonTap" on-tap="sendTap">Tap Feet</paper-button>
+            <paper-button raised id="buttonTapRight" on-tap="sendTapRight">Tap Right Foot</paper-button>
+        </div>
+
+        <div class="horizontal center-justified layout" style="margin-bottom: 10px;">
+            <paper-button raised id="buttonShakeLeft" on-tap="sendShakeLeft">Shake Left Leg</paper-button>
+            <paper-button raised id="buttonShakeLegs" on-tap="sendShakeLegs">Shake Legs</paper-button>
+            <paper-button raised id="buttonShakeRight" on-tap="sendShakeRight">Shake Right Leg</paper-button>
+        </div>
+                
+    </template>
+
+
+
+    
+    <script>
+        (function() {
+            Polymer({
+                is: 'botcontrol-animation',
+                properties: {
+                },
+
+                ready: function() {
+                    document.addEventListener("deviceready", this.setupMedia, false);
+                },
+
+                setupMedia: function() {
+                    
+                },
+
+                sendShake: function() {
+                    // mediaShake.play();
+                    bluetoothSerial.write("<SX,4>", this.onWrite, this.onError);
+                },
+
+                sendBounce: function() {
+                    // mediaBounce.play();
+                    bluetoothSerial.write("<BX,4>", this.onWrite, this.onError);
+                },
+
+                sendWobbleLeft: function() {
+                    // mediaWobbleLeft.play();
+                    bluetoothSerial.write("<WY,2>", this.onWrite, this.onError);
+                },
+
+                sendWobble: function() {
+                    // mediaWobble.play();
+                    bluetoothSerial.write("<WX,4>", this.onWrite, this.onError);
+                },
+
+                sendWobbleRight: function() {
+                    // mediaWobbleRight.play();
+                    bluetoothSerial.write("<WZ,2>", this.onWrite, this.onError);
+                },
+
+                sendTapLeft: function() {
+                    // mediaTapLeft.play();
+                    bluetoothSerial.write("<TY,4>", this.onWrite, this.onError);
+                },
+
+                sendTap: function() {
+                    // mediaTap.play();
+                    bluetoothSerial.write("<TX,4>", this.onWrite, this.onError);
+                },
+
+                sendTapRight: function() {
+                    // mediaTapRight.play();
+                    bluetoothSerial.write("<TZ,4>", this.onWrite, this.onError);
+                },
+
+                sendShakeLeft: function() {
+                    // mediaShakeLeft.play();
+                    bluetoothSerial.write("<LY,2>", this.onWrite, this.onError);
+                },
+
+                sendShakeLegs: function() {
+                    // mediaShakeLegs.play();
+                    bluetoothSerial.write("<LX,4>", this.onWrite, this.onError);
+                },
+
+                sendShakeRight: function() {
+                    // mediaShakeRight.play();
+                    bluetoothSerial.write("<LZ,2>", this.onWrite, this.onError);
+                },
+
+                
+
+                onWrite: function() {
+
+                },
+
+                onError: function() {
+                    console.log("errror")
+                }
+
+
+            });
+        })();
+    </script>
+</dom-module>

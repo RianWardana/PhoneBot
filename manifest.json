@@ -1,0 +1,6 @@
+{
+  "name": "phonebot",
+  "short_name": "phonebot",
+  "start_url": "/",
+  "display": "standalone"
+}

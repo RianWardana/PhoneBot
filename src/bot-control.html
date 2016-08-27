@@ -1,0 +1,103 @@
+<dom-module id="bot-control">
+    <template>
+        <style include="iron-flex iron-flex-alignment">
+            :host {
+                display: block;
+                --iron-icon-height: 48px;
+                --iron-icon-width: 48px;
+            }
+
+            :root {
+                
+            }
+
+            paper-dialog#dialog {
+                background: #f7f7f7;
+                bottom: 2%;
+                margin: 0 2% 0;
+                width: 100%;
+            }
+            
+            iron-pages {
+                height: 260px;
+            }
+
+            paper-button {
+                text-align: center;
+                background-color: #90A4AE;
+                color: #FFF;
+                margin: 0px;
+            }
+
+            b {
+                color: #666;
+            }
+        </style>
+
+
+        <paper-dialog id="dialog" 
+            on-iron-overlay-opened="_dialogOpened"
+            on-iron-overlay-closed="_dialogClosed"
+            entry-animation="scale-up-animation"
+            exit-animation="fade-out-animation" 
+            opened no-cancel-on-outside-click
+        >
+            <iron-pages attr-for-selected="halaman" selected="{{halamanSekarang}}">
+                <botcontrol-connection halaman="Setup Connection"></botcontrol-connection>
+                <botcontrol-walk halaman="Walking Control"></botcontrol-walk>
+                <botcontrol-animation halaman="Animations"></botcontrol-animation>
+            </iron-pages>
+
+            <div style="margin-top: 0;" class="horizontal justified layout">
+                <paper-button on-tap="clickPrev">Prev</paper-button>
+                <div class="vertical center-justified layout"><b>{{halamanSekarang}}</b></div>
+                <paper-button on-tap="clickNext">Next</paper-button>
+            </div>
+
+        </paper-dialog>
+
+    </template>
+
+
+
+    
+    <script>
+        (function() {
+            Polymer({
+                is: 'bot-control',
+                properties: {
+                    halamanSekarang: {
+                        type: String,
+                        value: 'Setup Connection'
+                    },
+
+                    dialogOpened: {
+                        type: Boolean,
+                        notify: true
+                    }
+                },
+
+                ready: function() {
+                },
+
+                clickPrev: function() {
+                    var pages = document.querySelector('iron-pages');
+                    pages.selectPrevious();
+                },
+
+                clickNext: function() {
+                    var pages = document.querySelector('iron-pages');
+                    pages.selectNext();
+                },
+
+                _dialogOpened: function() {
+                    this.dialogOpened = true;
+                },
+
+                _dialogClosed: function() {
+                    // this.dialogOpened = false;
+                }
+            });
+        })();
+    </script>
+</dom-module>

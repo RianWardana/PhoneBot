@@ -1,0 +1,137 @@
+<dom-module id="botcontrol-walk">
+    <template>
+        <style include="iron-flex iron-flex-alignment">
+            :host {
+                display: block;
+                --iron-icon-height: 48px;
+                --iron-icon-width: 48px;
+            }
+
+            :root {
+                
+            }
+
+            paper-button {
+                text-align: center;
+                background-color: #90A4AE;
+                color: #FFF;
+                margin: 0px;
+            }
+            
+            paper-button#buttonStop {
+                margin: 0 20px 0;
+            }
+
+            .horizontal.layout {
+                margin-bottom: 20px;
+            }
+        </style>
+
+
+        
+        <div class="horizontal center-justified layout">
+            <paper-button raised id="buttonForward">
+                <iron-icon class="big" icon="hardware:keyboard-arrow-up"></iron-icon>
+            </paper-button>
+        </div>
+        
+        <div class="horizontal center-justified layout">
+            <paper-button raised id="buttonLeft">
+                <iron-icon class="big" icon="hardware:keyboard-arrow-left"></iron-icon>
+            </paper-button>
+            <paper-button raised id="buttonStop">
+                <iron-icon class="big" icon="av:stop"></iron-icon>
+            </paper-button>
+            <paper-button raised id="buttonRight">
+                <iron-icon class="big" icon="hardware:keyboard-arrow-right"></iron-icon>
+            </paper-button>
+        </div>
+        
+        <div class="horizontal center-justified layout" style="margin-bottom: 0;">
+            <paper-button raised id="buttonBackward">
+                <iron-icon class="big" icon="hardware:keyboard-arrow-down"></iron-icon>
+            </paper-button>
+        </div>
+                
+    </template>
+
+
+
+    
+    <script>
+        (function() {
+            Polymer({
+                is: 'botcontrol-walk',
+                properties: {
+                    triggerMumble: {
+                        type: Boolean,
+                        notify: true
+                    }
+                },
+
+                ready: function() {
+                    // that = this;
+                    this.setupEventListener();
+                    document.addEventListener("deviceready", this.setupMedia, false);
+                },
+
+                setupEventListener: function() {
+                    this.$.buttonForward.addEventListener('touchstart', this.sendForward, false);
+                    this.$.buttonLeft.addEventListener('touchstart', this.sendLeft, false);
+                    this.$.buttonStop.addEventListener('touchstart', this.sendStop, false);
+                    this.$.buttonRight.addEventListener('touchstart', this.sendRight, false);
+                    this.$.buttonBackward.addEventListener('touchstart', this.sendBackward, false);
+                },
+
+                setupMedia: function() {
+                    mediaIntro_1 = new Media('/android_asset/www/src/media/intro1.mp3', function() {mediaIntro_2.play()});
+                    // mediaIntro_2 = new Media('/android_asset/www/src/media/intro2.mp3', function() {that.triggerMumble = false});
+                    mediaIntro_2 = new Media('/android_asset/www/src/media/intro2.mp3');
+                    mediaForward = new Media('/android_asset/www/src/media/forward.mp3');
+                    mediaLeft = new Media('/android_asset/www/src/media/left.mp3');
+                    mediaStop = new Media('/android_asset/www/src/media/stop.mp3');
+                    mediaRight = new Media('/android_asset/www/src/media/right.mp3');
+                    mediaBackward = new Media('/android_asset/www/src/media/backward.mp3');
+
+                    mediaIntro_1.play();
+                    // that.triggerMumble = true;
+                },
+
+                sendForward: function() {
+                    mediaForward.play();
+                    bluetoothSerial.write("<FW,2>", this.onWrite, this.onError);
+                },
+
+                sendLeft: function() {
+                    mediaLeft.play();
+                    bluetoothSerial.write("<LT,2>", this.onWrite, this.onError);
+                },
+
+                sendStop: function() {
+                    mediaStop.play();
+                    bluetoothSerial.write("<ST>", this.onWrite, this.onError);
+                },
+
+                sendRight: function() {
+                    mediaRight.play();
+                    bluetoothSerial.write("<RT,2>", this.onWrite, this.onError);
+                },
+
+                sendBackward: function() {
+                    mediaBackward.play();
+                    bluetoothSerial.write("<BW,2>", this.onWrite, this.onError);
+                },
+
+                onWrite: function() {
+
+                },
+
+                onError: function() {
+                    console.log("errror")
+                }
+
+
+            });
+        })();
+    </script>
+</dom-module>
