@@ -15,7 +15,12 @@ gulp.task('cloneMedia', function() {
 gulp.task('cloneImages', function() {
 	return gulp.src('img/*.*')
 	.pipe(gulp.dest('../cordova/www/img'))
-})
+});
+
+gulp.task('cloneCordova', function() {
+	return gulp.src('../cordova/config.xml')
+	.pipe(gulp.dest(''))
+});
 
 gulp.task('watch', function() {
 	gulp.watch('bower_components/**/*.*', ['build']);
@@ -24,6 +29,7 @@ gulp.task('watch', function() {
 	gulp.watch('polymer.json', ['build']);
 	gulp.watch('src/media/*.*', ['cloneMedia']);
 	gulp.watch('img/*.*', ['cloneImages']);
+	gulp.watch('../cordova/config.xml', ['cloneCordova']);
 });
 
 gulp.task('default', ['build', 'watch']);
