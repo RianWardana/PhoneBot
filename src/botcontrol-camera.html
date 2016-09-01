@@ -29,10 +29,10 @@
 
                 _cekHalaman: function(halaman) {
                     if (this.deviceReady) {
-                        console.log("oy")
+                        console.log("_checkHalaman")
                         if (this.halamanSekarang == 'Take Photo') {
                             // cordova.plugins.camerapreview.show();
-                            console.log("heuy")
+                            console.log("Take Photo")
                             var xVal = (window.innerWidth - 300) / 2;
                             var yVal = window.innerHeight - 350;
                             cordova.plugins.camerapreview.startCamera({x: xVal, y: yVal, width: 300, height: 260}, "front");
@@ -42,7 +42,7 @@
                             cordova.plugins.camerapreview.stopCamera();
                         }
                     }
-                    else console.log("jebol")
+                    else console.log("Changed")
                 },
 
                 ready: function() {
