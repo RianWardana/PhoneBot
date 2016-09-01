@@ -112,7 +112,7 @@
 
                 sendLeft: function() {
                     thisBcW.startMumble();
-                    mediaLeft.play();
+                    mediaRight.play();
                     bluetoothSerial.write("<RT,2>", this.onWrite, this.onError);
                 },
 
@@ -124,7 +124,7 @@
 
                 sendRight: function() {
                     thisBcW.startMumble();
-                    mediaRight.play();
+                    mediaLeft.play();
                     bluetoothSerial.write("<LT,2>", this.onWrite, this.onError);
                 },
 
