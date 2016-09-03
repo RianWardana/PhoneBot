@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var polybuild = require('polybuild');
+var rename = require('gulp-rename'); // gulp-rename otomatis tersedua karena ia adalah dependency dari polybuild
 
 gulp.task('build', function() {
 	return gulp.src('index.html')
@@ -23,7 +24,8 @@ gulp.task('cloneCordova', function() {
 });
 
 gulp.task('cloneAPK', function() {
-	return gulp.src('../cordova/platforms/android/build/outputs/apk/android-debug.apk');
+	return gulp.src('../cordova/platforms/android/build/outputs/apk/android-debug.apk')
+	.pipe(rename('phonebot.apk'))
 	.pipe(gulp.dest('apk'))
 });
 
