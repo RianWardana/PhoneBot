@@ -40,4 +40,6 @@ gulp.task('watch', function() {
 	gulp.watch('../cordova/platforms/android/build/outputs/apk/android-debug.apk', ['cloneAPK']);
 });
 
-gulp.task('default', ['build', 'watch']);
+
+gulp.task('runAll', ['build', 'cloneMedia', 'cloneImages', 'cloneCordova', 'cloneAPK']);
+gulp.task('default', ['runAll', 'watch']);
